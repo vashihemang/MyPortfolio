@@ -1,6 +1,6 @@
         // --- TYPING EFFECT ---
 const typedTextSpan = document.getElementById("typed-text");
-const textArray = ["Frontend Developer.", "ML Engineer.", "Problem Solver."];
+const textArray = ["BCA AI Student.","AI Learner.","Frontend Developer.", "Problem Solver."];
 const typingDelay = 100;
 const erasingDelay = 60;
 const newTextDelay = 2000; 
