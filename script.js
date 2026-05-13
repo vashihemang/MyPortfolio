@@ -128,6 +128,66 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
+ const scriptURL = 'https://script.google.com/macros/s/AKfycbyk4E27gMabmLFhn54fmFMIOb5DVexF-dP1GbCz0wB4P2cpNkZEYEVx1xk9MHnJ6-ptNA/exec';
+  const form = document.getElementById('my-portfolio-form');
+  const btn = document.getElementById('submit-btn');
+  
+  // Modal Variables
+  const modal = document.getElementById('status-modal');
+  const successDiv = document.getElementById('modal-success');
+  const errorDiv = document.getElementById('modal-error');
+
+  // Function to show modal
+  function showModal(status) {
+      modal.style.display = 'flex';
+      if (status === 'success') {
+          successDiv.style.display = 'block';
+          errorDiv.style.display = 'none';
+      } else {
+          successDiv.style.display = 'none';
+          errorDiv.style.display = 'block';
+      }
+  }
+
+  // Function to close modal
+  function closeModal() {
+      modal.style.display = 'none';
+  }
+
+  // Close modal when clicking outside of it
+  window.onclick = function(event) {
+      if (event.target == modal) {
+          closeModal();
+      }
+  }
+
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    
+    btn.disabled = true;
+    btn.innerHTML = "Sending...";
+
+    fetch(scriptURL, { 
+        method: 'POST', 
+        body: new FormData(form)
+    })
+    .then(response => {
+        if(response.ok) {
+            showModal('success'); // Open success popup
+            form.reset();         // Form ke inputs clear kar dega
+        } else {
+            throw new Error('Network response was not ok.');
+        }
+    })
+    .catch(error => {
+        console.error('Error!', error.message);
+        showModal('error');       // Open error popup
+    })
+    .finally(() => {
+        btn.disabled = false;
+        btn.innerHTML = 'Send Message <i class="fas fa-paper-plane"></i>';
+    });
+  });
 
 
 
